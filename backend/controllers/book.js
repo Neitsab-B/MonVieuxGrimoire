@@ -1,6 +1,7 @@
 const Book = require("../models/Book");
 const fs = require("fs");
 
+// Get all books
 exports.getAllBooks = (req, res, next) => {
   Book.find()
     .then((books) => {
@@ -13,6 +14,7 @@ exports.getAllBooks = (req, res, next) => {
     });
 };
 
+// Get top-rated books
 exports.getBestrating = (req, res, next) => {
   Book.find({})
     .sort({ averageRating: -1 })
@@ -25,6 +27,7 @@ exports.getBestrating = (req, res, next) => {
     });
 };
 
+// Get a single book by ID
 exports.getOneBook = (req, res, next) => {
   Book.findOne({
     _id: req.params.id,
@@ -39,6 +42,7 @@ exports.getOneBook = (req, res, next) => {
     });
 };
 
+// Create a new book
 exports.createBook = (req, res, next) => {
   const bookObject = JSON.parse(req.body.book);
   delete bookObject._id;
@@ -60,6 +64,7 @@ exports.createBook = (req, res, next) => {
     });
 };
 
+// Create a rating for a book
 exports.createRating = (req, res, next) => {
   Book.findOne({ _id: req.params.id })
     .then((book) => {
@@ -96,6 +101,7 @@ exports.createRating = (req, res, next) => {
     });
 };
 
+// Modify a book
 exports.modifyBook = (req, res, next) => {
   const bookObject = req.file
     ? {
@@ -125,6 +131,7 @@ exports.modifyBook = (req, res, next) => {
     });
 };
 
+// Delete a book
 exports.deleteBook = (req, res, next) => {
   Book.findOne({ _id: req.params.id })
     .then((book) => {

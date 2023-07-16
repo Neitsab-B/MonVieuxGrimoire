@@ -7,13 +7,13 @@ const modifyImage = (req, res, next) => {
   const imageInput = req.file.path;
   const imageOutput = req.file.path.replace(/\.(jpg|jpeg|png)$/, ".webp");
 
-  // Modification de la taille et du format de l'image
+  // Modify the size and format of the image
   sharp(imageInput)
     .resize({ width: 800 })
     .toFormat("webp")
     .toFile(imageOutput)
     .then(() => {
-      // Suppression de l'image d'origine
+      // Delete the original image file
       fs.unlinkSync(imageInput);
 
       req.file.path = imageOutput;
